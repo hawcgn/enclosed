@@ -31,6 +31,49 @@ export const configDefinition = {
       default: [],
       env: 'SERVER_CORS_ORIGINS',
     },
+    useHttps: {
+      doc: 'Whether to enable HTTPS for the server (only in node env)',
+      schema: z
+        .string()
+        .trim()
+        .toLowerCase()
+        .transform(x => x === 'true')
+        .pipe(z.boolean()),
+      default: 'false',
+      env: 'SERVER_USE_HTTPS',
+    },
+    https: {
+      key: {
+        doc: 'The key for HTTPS (only in node env)',
+        schema: z.string().optional(),
+        default: undefined,
+        env: 'SERVER_HTTPS_KEY',
+      },
+      cert: {
+        doc: 'The cert for HTTPS (only in node env)',
+        schema: z.string().optional(),
+        default: undefined,
+        env: 'SERVER_HTTPS_CERT',
+      },
+      ca: {
+        doc: 'The CA for HTTPS (only in node env)',
+        schema: z.string().optional(),
+        default: undefined,
+        env: 'SERVER_HTTPS_CA',
+      },
+      pfx: {
+        doc: 'The pfx for HTTPS (only in node env)',
+        schema: z.string().optional(),
+        default: undefined,
+        env: 'SERVER_HTTPS_PFX',
+      },
+      passphrase: {
+        doc: 'The passphrase of the PFX cert (only in node env)',
+        schema: z.string().optional(),
+        default: undefined,
+        env: 'SERVER_HTTPS_PASSPHRASE',
+      },
+    },
   },
   notes: {
     maxEncryptedPayloadLength: {
@@ -156,6 +199,12 @@ export const configDefinition = {
         .pipe(z.boolean()),
       default: 'false',
       env: 'PUBLIC_DEFAULT_NOTE_NO_EXPIRATION',
+    },
+    viewNotePathPrefix: {
+      doc: 'The prefix for the path to view a note',
+      schema: z.string(),
+      default: '/',
+      env: 'PUBLIC_VIEW_NOTE_PATH_PREFIX',
     },
   },
   authentication: {
